@@ -1,32 +1,28 @@
 default: &default
   adapter: postgresql
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  url: <%= ENV["DATABASE_URL"] %>
 
 development:
   <<: *default
-  database: development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: test
+  database: <%= ENV["DATABASE_URL"] %>_test
 
 production:
   primary:
     <<: *default
-    database: production
   cache:
     <<: *default
-    database: production_cache
+    database: <%= ENV["DATABASE_URL"] %>_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
-    database: production_queue
+    database: <%= ENV["DATABASE_URL"] %>_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: production_cable
+    database: <%= ENV["DATABASE_URL"] %>_cable
     migrations_paths: db/cable_migrate
