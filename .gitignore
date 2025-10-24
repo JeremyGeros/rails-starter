@@ -4,8 +4,9 @@
 # belong in git's global ignore instead:
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
-# Ignore bundler config.
-/.bundle
+# Ignore bundler directory contents, but keep the config file versioned.
+/.bundle/*
+!.bundle/config
 
 # Ignore all environment files.
 /.env*
@@ -42,4 +43,8 @@ node_modules
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
+
+# Bundled gems installed to vendor
+/vendor/bundle/
+/vendor/bin/
 

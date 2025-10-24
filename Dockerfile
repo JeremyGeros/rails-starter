@@ -22,7 +22,7 @@ RUN apt-get update -qq && \
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_PATH="/rails/vendor/bundle" \
     BUNDLE_WITHOUT="development"
 
 # Throw-away build stage to reduce size of final image
@@ -55,7 +55,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Copy built artifacts: gems, application
-COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
+COPY --from=build /rails/vendor/bundle /rails/vendor/bundle
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
